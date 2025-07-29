@@ -1,3 +1,3 @@
-# Mythyme Landing Page
+# mythyme.app zero page
 
-Simple landing page for the Mythyme app.
+First simple landing page for the mythyme app.
