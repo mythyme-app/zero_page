@@ -15,7 +15,10 @@
       font-weight:300;
       display:flex;justify-content:center;
       align-items:center;text-align:center;
-      flex-direction:column;color:#fff;
+      flex-direction:column;color:#f5f5f5;
+    }
+    .hero{
+      transform:translateY(-12vh);
     }
     .logo{
       max-width:300px;width:60%;
@@ -32,13 +35,13 @@
       margin-top:8px;
       font-size:0.95rem;
       letter-spacing:0.045em;
-      color:rgba(255,255,255,0.88);
+      color:#f5f5f5;
       font-weight:400;
       line-height:1.45;
       animation:fadeIn 2.4s ease-out;
     }
     .mythyme a{
-      color:#fff;
+      color:#f5f5f5;
       text-decoration:none;
     }
     .mythyme a:hover{
@@ -52,10 +55,12 @@
   </style>
 </head>
 <body>
-  <img src="logo.png" alt="Logo" class="logo">
-  <div class="mythyme">
-    <a href="https://www.linkedin.com/company/mythyme-app/?viewAsMember=true" target="_blank">mythyme.app</a>
+  <div class="hero">
+    <img src="logo.png" alt="Logo" class="logo">
+    <div class="mythyme">
+      <a href="https://www.linkedin.com/company/mythyme-app/?viewAsMember=true" target="_blank">mythyme.app</a>
+    </div>
+    <div class="tagline">We make daily life machine-readable</div>
   </div>
-  <div class="tagline">We make daily life machine-readable</div>
 </body>
 </html>
