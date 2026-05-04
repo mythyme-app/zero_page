@@ -2,85 +2,266 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mythyme</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mythyme</title>
   <link rel="icon" type="image/png" href="favicon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    @keyframes fadeIn {0%{opacity:0;transform:scale(0.95)}100%{opacity:1;transform:scale(1)}}
-    @keyframes pulse {0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
-    html,body{
-      height:100%;margin:0;background:#000;
-      font-family:'Raleway',sans-serif;
-      font-weight:300;
-      display:flex;justify-content:center;
-      align-items:center;text-align:center;
-      flex-direction:column;color:#f5f5f5;
+    :root {
+      color-scheme: light dark;
+      --paper: #f6f3ec;
+      --ink: #151515;
+      --muted: #6d6860;
+      --soft: #8b857c;
+      --grid-minor: rgba(21, 21, 21, 0.016);
+      --grid-major: rgba(21, 21, 21, 0.036);
+      --accent: #ff0000;
+      --grid-minor-step: 8px;
+      --grid-major-step: 40px;
+      --grid-x: 0px;
+      --grid-y: 0px;
     }
-    .hero{
-      transform:translateY(-12vh);
+
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --paper: #090d0c;
+      --ink: #f2f1eb;
+      --muted: #969d96;
+      --soft: #707a72;
+      --grid-minor: rgba(220, 255, 235, 0.015);
+      --grid-major: rgba(220, 255, 235, 0.034);
+      --accent: #ff0000;
     }
-    .logo{
-      max-width:300px;width:60%;
-      display:block;margin:0 auto;
-      animation:fadeIn 2s ease-out,pulse 5s ease-in-out infinite;
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --paper: #090d0c;
+        --ink: #f2f1eb;
+        --muted: #969d96;
+        --soft: #707a72;
+        --grid-minor: rgba(220, 255, 235, 0.015);
+        --grid-major: rgba(220, 255, 235, 0.034);
+        --accent: #ff0000;
+      }
     }
-    .mythyme{
-      margin-top:20px;font-size:1.5rem;
-      font-weight:600;
-      letter-spacing:0.025em;
-      animation:fadeIn 2s ease-out;
+
+    * {
+      box-sizing: border-box;
     }
-    .tagline{
-      margin-top:8px;
-      font-size:0.95rem;
-      letter-spacing:0.045em;
-      color:#f5f5f5;
-      font-weight:400;
-      line-height:1.45;
-      animation:fadeIn 2.4s ease-out;
+
+    html,
+    body {
+      min-height: 100%;
     }
-    .linkedin-link{
-      position:fixed;
-      left:50%;
-      bottom:32px;
-      transform:translateX(-50%);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      color:#f5f5f5;
-      opacity:0.62;
-      transition:opacity 0.2s ease,transform 0.2s ease;
-      animation:fadeIn 2.8s ease-out;
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      background:
+        linear-gradient(var(--grid-major) 1px, transparent 1px) var(--grid-x) var(--grid-y) / var(--grid-major-step) var(--grid-major-step),
+        linear-gradient(90deg, var(--grid-major) 1px, transparent 1px) var(--grid-x) var(--grid-y) / var(--grid-major-step) var(--grid-major-step),
+        linear-gradient(var(--grid-minor) 1px, transparent 1px) var(--grid-x) var(--grid-y) / var(--grid-minor-step) var(--grid-minor-step),
+        linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px) var(--grid-x) var(--grid-y) / var(--grid-minor-step) var(--grid-minor-step),
+        var(--paper);
+      font-family: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: 0;
     }
-    .linkedin-link:hover{
-      opacity:0.9;
-      transform:translateX(-50%) scale(1.04);
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
-    .linkedin-link svg{
-      width:18px;
-      height:18px;
-      display:block;
-      fill:currentColor;
+
+    .page {
+      position: relative;
+      min-height: 100vh;
     }
-    @media screen and (max-width:600px){
-      .logo{width:80%;max-width:200px;}
-      .mythyme{font-size:1.2rem;}
-      .tagline{font-size:0.82rem;padding:0 24px;}
-      .linkedin-link{bottom:24px;}
+
+    .identity {
+      position: fixed;
+      top: calc(var(--grid-major-step) + var(--grid-minor-step));
+      left: calc(var(--grid-major-step) + var(--grid-minor-step));
+      z-index: 10;
+      width: calc(var(--grid-major-step) * 10);
+    }
+
+    .nav {
+      position: fixed;
+      bottom: calc(var(--grid-major-step) + var(--grid-minor-step));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      min-width: 0;
+      color: var(--muted);
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 40px;
+      transition: color 160ms ease;
+      white-space: nowrap;
+    }
+
+    .brand:hover {
+      color: var(--ink);
+    }
+
+    .nav-link,
+    .theme-toggle {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 24px;
+      transition: color 160ms ease;
+    }
+
+    .theme-toggle {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .nav-link:hover,
+    .theme-toggle:hover {
+      color: var(--ink);
+    }
+
+    .slogan {
+      position: relative;
+      width: 100%;
+      height: calc(var(--grid-major-step) * 2);
+      margin: calc(var(--grid-major-step) - var(--grid-minor-step)) 0 0;
+      color: var(--muted);
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 24px;
+    }
+
+    .slogan .emphasis {
+      color: var(--ink);
+    }
+
+    .line {
+      display: block;
+      position: absolute;
+      left: 0;
+      white-space: nowrap;
+    }
+
+    .line:nth-child(1) {
+      top: 0;
+      color: var(--soft);
+      font-weight: 400;
+    }
+
+    .line:nth-child(2) {
+      top: calc(var(--grid-major-step) - 12px);
+      left: var(--grid-major-step);
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .line:nth-child(3) {
+      bottom: 0;
+      left: calc(var(--grid-major-step) * 2);
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .dot {
+      color: var(--accent);
+    }
+
+    @media (max-width: 640px) {
+      .identity {
+        top: calc(var(--grid-major-step) + var(--grid-minor-step));
+        left: calc(var(--grid-major-step) + var(--grid-minor-step));
+        width: calc(100vw - (var(--grid-major-step) + var(--grid-minor-step)) * 2);
+      }
+
+      .brand {
+        font-size: 22px;
+        line-height: 32px;
+      }
+
+      .slogan {
+        margin-top: 24px;
+        font-size: 15px;
+        line-height: 24px;
+      }
+
+      .nav {
+        bottom: calc(var(--grid-major-step) + var(--grid-minor-step));
+        gap: 14px;
+      }
+
+      .nav-link,
+      .theme-toggle {
+        font-size: 14px;
+      }
+
+      .line:nth-child(2) {
+        top: calc(var(--grid-major-step) - 12px);
+        left: 24px;
+      }
+
+      .line:nth-child(3) {
+        left: 48px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="hero">
-    <img src="logo.png" alt="Logo" class="logo">
-    <div class="mythyme">mythyme.app</div>
-    <div class="tagline">We make daily life machine-readable</div>
-  </div>
-  <a class="linkedin-link" href="https://www.linkedin.com/company/mythyme-app/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M4.98 3.5a2.48 2.48 0 1 1 0 4.96 2.48 2.48 0 0 1 0-4.96ZM3 9h3.96v12H3V9Zm7.02 0H13.8v1.64h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.78 2.5 4.78 5.75V21h-3.96v-5.9c0-1.4-.03-3.2-2.05-3.2-2.05 0-2.36 1.52-2.36 3.1V21h-4V9Z"/>
-    </svg>
-  </a>
+  <header class="identity">
+    <a class="brand" href="./index.html" aria-label="Mythyme current page">
+      <span>mythyme.app</span>
+    </a>
+
+    <p class="slogan">
+      <span class="line">We make</span>
+      <span class="line"><span class="emphasis">daily life</span></span>
+      <span class="line">machine-readable<span class="dot">.</span></span>
+    </p>
+  </header>
+
+  <nav class="nav" aria-label="External links and display options">
+    <button class="theme-toggle" type="button" id="themeToggle">dark</button>
+    <a class="nav-link" href="https://www.linkedin.com/company/mythyme-app/?viewAsMember=true" target="_blank" rel="noopener noreferrer">in</a>
+  </nav>
+
+  <main class="page" aria-hidden="true"></main>
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById("themeToggle");
+    const storedTheme = window.localStorage.getItem("mythyme-theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    function setTheme(theme) {
+      root.dataset.theme = theme;
+      toggle.textContent = theme === "dark" ? "light" : "dark";
+      window.localStorage.setItem("mythyme-theme", theme);
+    }
+
+    setTheme(storedTheme || (prefersDark ? "dark" : "light"));
+
+    toggle.addEventListener("click", () => {
+      setTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    });
+  </script>
 </body>
 </html>
